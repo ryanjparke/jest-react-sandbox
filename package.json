@@ -21,5 +21,17 @@
     "eject": "react-scripts eject"
   },
   "main": "./server/index.js",
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanjparke/jest-react-sandbox.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryanjparke/jest-react-sandbox/issues"
+  },
+  "homepage": "https://github.com/ryanjparke/jest-react-sandbox#readme"
 }

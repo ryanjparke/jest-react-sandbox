@@ -1,5 +1,31 @@
 .App {
   text-align: center;
+  color: #9CDCF1;
+  background-color: #2D2B2B;
+}
+
+.App button {
+  height: 5vh;
+  width: 5vw;
+  background-color: #9CDCF1;
+  color: #2D2B2B;
+}
+
+.App button:hover {
+  height: 5vh;
+  width: 5vw;
+  background-color: #2D2B2B;
+  color: #9CDCF1;
+  transition: 0.5s;
+
+}
+
+.App input {
+  transition: 1s;
+}
+
+.headers {
+  color: snow;
 }
 
 .App-logo {

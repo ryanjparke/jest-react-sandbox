@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import fns from './utils/functions';
 import './App.css';
 
 
@@ -23,19 +23,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/cars').then( data => {
+    fns.getCars('/api/cars').then( res => {
       this.setState({
-        cars: data.data
+        cars: res
       })
     })
   }
 
   filterCarsById() {
-    console.log('running')
-    const car = this.state.cars.filter( car => {
-      return car.id === parseInt(this.input.value)
-    })
-    console.log(car)
+    const car = fns.filterById
+    (this.state.cars, this.input.value)
     this.setState({
       carById: car
     })
@@ -52,33 +49,19 @@ class App extends Component {
 
   randomNum() {
     this.setState({
-      randomNum: Math.floor(Math.random() * 10) + 1
-    })
-  }
+      randomNum: fns.randomNum()
+  })
+}
 
   battle() {
-    console.log('running')
+    // battle: fns.battle()
     let elfHealth = parseInt(this.elfH.value);
     let elfAttack = parseInt(this.elfA.value);
     let orcAttack = parseInt(this.orcA.value);
     let orcHealth = parseInt(this.orcH.value);
-    while(elfHealth > 0 || orcHealth > 0) {
-      console.log('elf', elfHealth, 'orc', orcHealth)
-      orcHealth -= elfAttack;
-      if (orcHealth<= 0) {
-        this.setState({
-          winner: 'Elf'
-        })
-        return;
-      }
-      elfHealth -= orcAttack;
-      if (elfHealth <= 0) {
-        this.setState({
-          winner: 'Orc'
-        })
-        return;
-      }
-    }
+    this.setState({
+      winner: fns.battle(elfHealth, elfAttack, orcAttack, orcHealth)
+    })
   }
   
   toggleCheck() {
@@ -93,6 +76,7 @@ class App extends Component {
     })
     return (
       <div className="App">
+        <div className="headers">
         <h1>Car Inventory</h1>
         <h3>Car Data:</h3>
         <p>Show/hide 
@@ -102,10 +86,13 @@ class App extends Component {
             type='checkbox'
           />
         </p>
+        </div>
         {this.state.checked ? 
           JSON.stringify(this.state.cars, null, 2) : 'Car data hidden.'}
         <hr/>  
+        <div className="headers">
         <h3>Filter cars by ID</h3>
+        </div>
         <input 
           ref={(input)=> this.input = input}
           placeholder='Enter a number 1 - 25'
@@ -117,8 +104,9 @@ class App extends Component {
            :
            JSON.stringify(this.state.carById, null, 2)}
         <hr/>
-
+        <div className="headers">
         <h3>Filter cars by color:</h3>
+        </div>
         <select onChange={this.filterByColor}>
           { options }
         </select><br/><br/> 
@@ -127,16 +115,16 @@ class App extends Component {
           :
           JSON.stringify(this.state.carsByColor, null, 2)}
         <hr />
-        <h1>Random number generator</h1>
+        <h1 className="headers">Random number generator</h1>
         <button onClick={this.randomNum}>1 - 10</button>
         <p>Random number: {this.state.randomNum}</p>
         <hr />
-        <h1>Battle</h1>
+        <h1 className="headers">Battle</h1>
         <p>Elf atttack: <input ref={(elfA)=> this.elfA = elfA} type='number'/></p>
         <p>Elf health: <input ref={(elfH)=> this.elfH = elfH} type='number'/></p>
         <p>Orc atttack: <input ref={(orcA)=> this.orcA = orcA} type='number'/></p>
         <p>Orc health: <input ref={(orcH)=> this.orcH = orcH} type='number'/></p>
-        <button onClick={this.battle}>Attack</button>
+        <button onClick={this.battle}>FINISH HIM</button>
         <p>Result: {this.state.winner}</p>
       </div>
     );
